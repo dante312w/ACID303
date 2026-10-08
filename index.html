@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ÁCIDO 303 — Noche de acid techno | Sábado 5 de Diciembre, Medellín</title>
+    <meta
+      name="description"
+      content="ÁCIDO 303: una noche dedicada a la caja plateada que inventó el acid. Dos salas, ocho horas, 138 BPM. Toca el secuenciador y arma tu propia línea ácida."
+    />
+    <meta name="theme-color" content="#0b0b0a" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ÁCIDO 303 — Noche de acid techno" />
+    <meta
+      property="og:description"
+      content="Dos salas, ocho horas, 138 BPM. Sáb. 5 DIC 2026 · Medellín."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23C6FF00'/%3E%3Ccircle cx='23' cy='25' r='4' fill='%230b0b0a'/%3E%3Ccircle cx='41' cy='25' r='4' fill='%230b0b0a'/%3E%3Cpath d='M18 37 Q32 52 46 37' stroke='%230b0b0a' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Space+Grotesk:wght@400;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Saltar al contenido</a>
+
+    <canvas class="scope-bg" id="scopeBg" aria-hidden="true"></canvas>
+
+    <!-- símbolo reutilizable: smiley ácido -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="smiley" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="30" fill="currentColor" />
+        <circle cx="23" cy="25" r="4" style="fill: var(--smiley-ink, #0b0b0a)" />
+        <circle cx="41" cy="25" r="4" style="fill: var(--smiley-ink, #0b0b0a)" />
+        <path
+          d="M18 37 Q32 52 46 37"
+          style="stroke: var(--smiley-ink, #0b0b0a)"
+          stroke-width="4"
+          fill="none"
+          stroke-linecap="round"
+        />
+      </symbol>
+    </svg>
+
+    <nav class="nav">
+      <a href="#main" class="nav__logo" aria-label="ÁCIDO 303, inicio">
+        ÁCIDO<span>/303</span>
+      </a>
+      <div class="nav__bpm" aria-hidden="true">
+        <span class="led"></span><span id="navBpm">138</span> BPM
+      </div>
+      <a href="#entradas" class="nav__cta">Entradas</a>
+    </nav>
+
+    <main id="main">
+      <!-- ================================================================
+           HERO
+           ================================================================ -->
+      <section class="hero">
+        <div class="container">
+          <p class="hero__label">COLECTIVO SQUELCH PRESENTA</p>
+
+          <h1 class="hero__title">
+            <span class="hero__title-line">ÁCIDO</span>
+            <span class="hero__title-line hero__title-line--num">
+              303
+              <svg class="hero__smiley" aria-hidden="true">
+                <use href="#smiley" />
+              </svg>
+            </span>
+          </h1>
+
+          <dl class="hero__meta">
+            <div>
+              <dt>Fecha</dt>
+              <dd>Sáb. 05 DIC 2026</dd>
+            </div>
+            <div>
+              <dt>Ciudad</dt>
+              <dd>Medellín, CO</dd>
+            </div>
+            <div>
+              <dt>Horario</dt>
+              <dd>23:00 — 07:00</dd>
+            </div>
+            <div>
+              <dt>Tempo</dt>
+              <dd>138 BPM</dd>
+            </div>
+          </dl>
+
+          <div class="hero__actions">
+            <a href="#entradas" class="btn btn--solid">Comprar entrada →</a>
+            <a href="#maquina" class="btn btn--quiet">Tocar la 303 ↓</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           MÁQUINA — secuenciador tocable
+           ================================================================ -->
+      <section class="section machine-section" id="maquina">
+        <div class="container">
+          <p class="eyebrow">LA MÁQUINA</p>
+          <h2 class="section-title fx-line">
+            No la escuches.<br /><span class="accent">Tócala.</span>
+          </h2>
+          <p class="section-lead fx-line">
+            Toca las celdas para escribir la línea de bajo, gira las perillas y
+            dale play. Todo el sonido se genera en vivo en tu navegador, y la
+            página entera late a tu tempo.
+          </p>
+
+          <div class="machine fx-line" id="machine">
+            <div class="machine__halo" aria-hidden="true"></div>
+            <div class="machine__top">
+              <div class="machine__brand">
+                <span class="machine__model">AC-303</span>
+                <span class="machine__sub">BASS LINE · SECUENCIADOR ÁCIDO</span>
+              </div>
+
+              <div class="machine__display" aria-live="polite">
+                <canvas id="scope" class="machine__scope" aria-hidden="true"></canvas>
+                <div class="machine__readout">
+                  <span>PAT <b id="readPat">01</b></span>
+                  <span>BPM <b id="readBpm">138</b></span>
+                  <span>STEP <b id="readStep">--</b></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="machine__knobs" id="knobs">
+              <!-- perillas generadas por JS -->
+            </div>
+
+            <div class="machine__controls">
+              <button class="mbtn mbtn--play" id="playBtn" aria-pressed="false">
+                <span class="mbtn__icon" aria-hidden="true">▶</span>
+                <span class="mbtn__label">PLAY</span>
+              </button>
+              <div class="machine__wave" role="group" aria-label="Forma de onda">
+                <button class="mbtn mbtn--small is-on" data-wave="sawtooth" aria-pressed="true">SAW</button>
+                <button class="mbtn mbtn--small" data-wave="square" aria-pressed="false">SQR</button>
+              </div>
+              <div class="machine__presets" role="group" aria-label="Patrones">
+                <button class="mbtn mbtn--small is-on" data-preset="0" aria-pressed="true">01</button>
+                <button class="mbtn mbtn--small" data-preset="1" aria-pressed="false">02</button>
+                <button class="mbtn mbtn--small" data-preset="2" aria-pressed="false">03</button>
+              </div>
+              <button class="mbtn mbtn--small" id="mutateBtn">MUTAR</button>
+              <button class="mbtn mbtn--small" id="clearBtn">BORRAR</button>
+              <button class="mbtn mbtn--small" id="shareBtn">COMPARTIR</button>
+            </div>
+
+            <div class="machine__grid-wrap">
+              <div class="machine__grid" id="grid" role="group" aria-label="Secuenciador de 16 pasos">
+                <!-- celdas generadas por JS -->
+              </div>
+            </div>
+
+            <p class="machine__hint">
+              <kbd>ESPACIO</kbd> play/stop con una perilla seleccionada · arrastra las perillas arriba/abajo · la línea
+              ácida es monofónica: una nota por paso · ACC = acento · SLD =
+              slide hacia el siguiente paso
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           TICKER
+           ================================================================ -->
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker__track">
+          <span>ACID HOUSE</span><svg><use href="#smiley" /></svg>
+          <span>ACID TECHNO</span><svg><use href="#smiley" /></svg>
+          <span>303 SIEMPRE</span><svg><use href="#smiley" /></svg>
+          <span>DOS SALAS · OCHO HORAS</span><svg><use href="#smiley" /></svg>
+          <span>ACID HOUSE</span><svg><use href="#smiley" /></svg>
+          <span>ACID TECHNO</span><svg><use href="#smiley" /></svg>
+          <span>303 SIEMPRE</span><svg><use href="#smiley" /></svg>
+          <span>DOS SALAS · OCHO HORAS</span><svg><use href="#smiley" /></svg>
+        </div>
+      </div>
+
+      <!-- ================================================================
+           LINE-UP — Lado A / Lado B
+           ================================================================ -->
+      <section class="section lineup" id="lineup">
+        <div class="container">
+          <p class="eyebrow">LINE-UP</p>
+          <h2 class="section-title fx-line">Lado A. Lado B.<br />Cero relleno.</h2>
+
+          <div class="lineup__grid">
+            <div class="vinyl fx-line" aria-hidden="true">
+              <div class="vinyl__disc">
+                <div class="vinyl__label">
+                  <span>ÁCIDO</span>
+                  <span>303</span>
+                  <span class="vinyl__rpm">33⅓ RPM</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="sides">
+              <div class="side fx-line">
+                <p class="side__name"><b>LADO A</b> — SALA PRINCIPAL</p>
+                <ol class="side__list">
+                  <li class="track track--head">
+                    <span class="track__n">A1</span>
+                    <span class="track__name">FILTRO ROTO</span>
+                    <span class="track__meta">03:00 · LIVE</span>
+                  </li>
+                  <li class="track">
+                    <span class="track__n">A2</span>
+                    <span class="track__name">RESONANCIA</span>
+                    <span class="track__meta">01:30 · DJ SET</span>
+                  </li>
+                  <li class="track">
+                    <span class="track__n">A3</span>
+                    <span class="track__name">PULSO 138</span>
+                    <span class="track__meta">00:15 · B2B GLIDE</span>
+                  </li>
+                  <li class="track">
+                    <span class="track__n">A4</span>
+                    <span class="track__name">ESTADO SÓLIDO</span>
+                    <span class="track__meta">23:00 · APERTURA</span>
+                  </li>
+                </ol>
+              </div>
+
+              <div class="side fx-line">
+                <p class="side__name"><b>LADO B</b> — EL TANQUE</p>
+                <ol class="side__list">
+                  <li class="track">
+                    <span class="track__n">B1</span>
+                    <span class="track__name">FÓSFORO</span>
+                    <span class="track__meta">04:30 · CLOSING</span>
+                  </li>
+                  <li class="track">
+                    <span class="track__n">B2</span>
+                    <span class="track__name">LA OCTAVA</span>
+                    <span class="track__meta">02:00 · LIVE</span>
+                  </li>
+                  <li class="track">
+                    <span class="track__n">B3</span>
+                    <span class="track__name">VERDE NEÓN</span>
+                    <span class="track__meta">00:30 · COLECTIVO LOCAL</span>
+                  </li>
+                  <li class="track">
+                    <span class="track__n">B4</span>
+                    <span class="track__name">ENV MOD</span>
+                    <span class="track__meta">23:30 · APERTURA</span>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           ENTRADAS — patterns
+           ================================================================ -->
+      <section class="section pricing" id="entradas">
+        <div class="container">
+          <p class="eyebrow">ENTRADAS</p>
+          <h2 class="section-title fx-line">Elige tu pattern.</h2>
+
+          <div class="pricing__grid fx-line">
+            <article class="ticket ticket--active">
+              <span class="ticket__badge">DISPONIBLE</span>
+              <span class="ticket__pat">PATTERN 01</span>
+              <h3 class="ticket__tier">Preventa</h3>
+              <div class="ticket__steps" aria-hidden="true" data-steps="1000100010001011"></div>
+              <span class="ticket__price">$70.000</span>
+              <p class="ticket__note">
+                Precio de lanzamiento. Cupos limitados, sube sin aviso al
+                agotarse.
+              </p>
+              <button class="btn btn--solid js-buy" aria-label="Comprar ahora: entrada Preventa, $70.000">Comprar ahora</button>
+            </article>
+            <article class="ticket">
+              <span class="ticket__pat">PATTERN 02</span>
+              <h3 class="ticket__tier">General</h3>
+              <div class="ticket__steps" aria-hidden="true" data-steps="1010101010101010"></div>
+              <span class="ticket__price">$95.000</span>
+              <p class="ticket__note">
+                Tanda estándar, se activa cuando se agote la preventa.
+              </p>
+              <button class="btn js-buy" aria-label="Comprar: entrada General, $95.000">Comprar</button>
+            </article>
+            <article class="ticket">
+              <span class="ticket__pat">PATTERN 03</span>
+              <h3 class="ticket__tier">Taquilla</h3>
+              <div class="ticket__steps" aria-hidden="true" data-steps="1111111111111111"></div>
+              <span class="ticket__price">$130.000</span>
+              <p class="ticket__note">
+                Sujeta a aforo el día del evento. No garantizada.
+              </p>
+              <button class="btn js-buy" aria-label="Comprar: entrada Taquilla, $130.000">Comprar</button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           HISTORIA / MANIFIESTO
+           ================================================================ -->
+      <section class="section story" id="historia">
+        <div class="container">
+          <p class="eyebrow">LA HISTORIA</p>
+          <h2 class="story__text fx-line">
+            Una caja plateada que fracasó. Y un sonido que
+            <span class="accent">no se fue nunca.</span>
+          </h2>
+          <div class="story__body fx-line">
+            <p>
+              La fabricaron a inicios de los 80 para acompañar guitarristas en
+              casa. Nadie la quiso. Terminó en tiendas de segunda, barata, hasta
+              que en Chicago alguien giró la resonancia al máximo y el filtro
+              empezó a gritar.
+            </p>
+            <p>
+              ÁCIDO 303 es una noche entera dedicada a ese grito: líneas
+              ácidas, kicks secos y ningún tema que no haya pasado por un
+              filtro.
+              <strong>Si no hace squelch, no suena.</strong>
+            </p>
+          </div>
+
+          <div class="specs fx-line">
+            <div class="specs__item">
+              <div class="specs__num" data-count="8">8</div>
+              <div class="specs__label">ARTISTAS · CERO RELLENO</div>
+            </div>
+            <div class="specs__item">
+              <div class="specs__num" data-count="2">2</div>
+              <div class="specs__label">SALAS · SISTEMA PROPIO</div>
+            </div>
+            <div class="specs__item">
+              <div class="specs__num" data-count="8" data-suffix="H">8H</div>
+              <div class="specs__label">DE ÁCIDO CONTINUO</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           FAQ
+           ================================================================ -->
+      <section class="section faq" id="faq">
+        <div class="container">
+          <p class="eyebrow">FAQ</p>
+          <h2 class="section-title fx-line">Antes de que preguntes.</h2>
+
+          <div class="faq__list fx-line">
+            <details class="faq__item">
+              <summary>¿Edad mínima?<span class="faq__icon" aria-hidden="true">+</span></summary>
+              <p>18 años cumplidos. Se pide documento en la entrada, sin excepción.</p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Dónde es exactamente?<span class="faq__icon" aria-hidden="true">+</span></summary>
+              <p>
+                Galpón industrial en el sur del Valle de Aburrá. La dirección
+                exacta llega por correo 48 horas antes del evento.
+              </p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Qué puedo llevar?<span class="faq__icon" aria-hidden="true">+</span></summary>
+              <p>
+                Documento, entrada digital y tapones para los oídos (también
+                los regalamos en barra). No ingresan envases de vidrio ni
+                morrales grandes.
+              </p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Hay reembolsos?<span class="faq__icon" aria-hidden="true">+</span></summary>
+              <p>
+                Solo si el evento se cancela. En ese caso se reembolsa el 100%
+                al mismo medio de pago.
+              </p>
+            </details>
+            <details class="faq__item">
+              <summary>¿Hay punto de cuidado?<span class="faq__icon" aria-hidden="true">+</span></summary>
+              <p>
+                Sí. Punto de hidratación gratuita, personal de salud y una zona
+                de descanso tranquila toda la noche.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           CTA FINAL
+           ================================================================ -->
+      <section class="section cta-final">
+        <div class="container">
+          <svg class="cta-final__smiley" aria-hidden="true"><use href="#smiley" /></svg>
+          <h2 class="cta-final__title fx-line">
+            Gira el filtro.<br />Nos vemos en la pista.
+          </h2>
+          <a href="#entradas" class="btn">Comprar entrada →</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__grid">
+          <div>
+            <p class="footer__logo">ÁCIDO<span>/303</span></p>
+            <p class="footer__tag">
+              Una noche de acid house y acid techno por Colectivo Squelch.
+              Medellín, Colombia.
+            </p>
+          </div>
+          <div class="footer__col">
+            <p class="footer__col-title">REDES</p>
+            <a href="#" class="js-buy">Instagram ↗</a>
+            <a href="#" class="js-buy">SoundCloud ↗</a>
+          </div>
+          <div class="footer__col">
+            <p class="footer__col-title">CONTACTO</p>
+            <a href="#" class="js-buy">hola@acido303.co</a>
+            <a href="#" class="js-buy">WhatsApp organización</a>
+          </div>
+        </div>
+        <div class="footer__legal">
+          <span>Proyecto conceptual de portafolio — marca, evento y artistas ficticios.</span>
+          <span>© 2026 ÁCIDO 303</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- barra de compra fija en móvil -->
+    <div class="buybar" id="buybar" aria-hidden="true" inert>
+      <div class="buybar__info">
+        <span class="buybar__tier">PREVENTA</span>
+        <span class="buybar__price">$70.000</span>
+      </div>
+      <a href="#entradas" class="btn btn--solid" aria-label="Comprar entrada Preventa, $70.000">Comprar →</a>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script defer src="js/engine.js"></script>
+    <script defer src="js/sequencer.js"></script>
+    <script defer src="js/main.js"></script>
+    <script defer src="js/animation.js"></script>
+  </body>
+</html>
